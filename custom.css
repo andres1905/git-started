@@ -1,3 +1,6 @@
 .big {
 	font-size: 1.7em !important;
 }
+pre.legible {
+	font-size: 0.75em !important;
+}
