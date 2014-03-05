@@ -46,8 +46,11 @@
 				
 				<section id="local-work">
 					<h2>trabajando localmente</h2>
+					<p class="big"><br/>\o/</p>
 					<p class="big">command line <strong>#FTW</strong></p>
-					</p>¿...o no?</p>
+					<br/>
+					<p><br/>¿...o no?</p>
+					<p>(・・?</p>
 				</section>
 				
 				<section id="init-repo">
@@ -417,7 +420,7 @@ index 0000000..e69de29
 				</section>
 				
 				<section id="show-id">
-					<p>¿para un <i>commit</i> más antiguo?</p>
+					<p>¿y los detalles de un <i>commit</i> más antiguo?</p>
 					<br/>
 					<h2><code>git show &lt;commit-id&gt;</code></h2>
 					<pre class="legible">
@@ -438,6 +441,214 @@ index e69de29..223b783 100644
 diff --git a/d.txt b/d.txt
 new file mode 100644
 index 0000000..e69de29
+						</code>
+					</pre>
+				</section>
+				
+				<section id="show-id-files">
+					<p>¡bacán! pero solo me interesan los archivos afectados...</p>
+					<br/>
+					<h2><code>git show &lt;id&gt; --name-only</code></h2>
+					<pre class="legible">
+						<code class="asciidoc extended">
+git-example user$ git show 09b9cbb --name-only
+commit 09b9cbb24a27a4b3084d1fba2b574c8b2b1876ee
+Author: user &lt;user@server.com&gt;
+Date:   Tue Mar 4 19:14:16 2014 -0500
+
+    Adding B content and d file.
+
+b.txt
+d.txt
+						</code>
+					</pre>
+				</section>
+				
+				<section id="show-id-file">
+					<p>ufff... y ¿qué tal ver los cambios de un archivo en un <i>commit</i> específico?</p>
+					<br/>
+					<h2><code>git show &lt;id&gt; -- file.ext</code></h2>
+					<pre class="legible">
+						<code class="asciidoc extended">
+git-example user$ git show 09b9cbb -- b.txt
+commit 09b9cbb24a27a4b3084d1fba2b574c8b2b1876ee
+Author: user &lt;user@server.com&gt;
+Date:   Tue Mar 4 19:14:16 2014 -0500
+
+    Adding B content and d file.
+
+diff --git a/b.txt b/b.txt
+index e69de29..223b783 100644
+--- a/b.txt
++++ b/b.txt
+@@ -0,0 +1 @@
++B
+						</code>
+					</pre>
+				</section>
+				
+				<section>
+					<p>para ir terminando...</p>
+				</section>
+				
+				<section id="reset-checkout-rebase-pre">
+					<pre class="legible">
+						<code class="asciidoc">
+git-example user$ echo "DDDDDD" > c.txt
+git-example user$ echo "BBBB" > b.txt
+git-example user$ git add .
+git-example user$ git status
+						</code>
+						<code>
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD &lt;file&gt;..." to unstage)
+#
+#	modified:   b.txt
+#	modified:   c.txt
+						</code>
+					</pre>
+				</section>
+				
+				<section id="reset-checkout">
+					<p>¡oh no! ¡"DDDDDD" no puede ir en c.txt!</p>
+					<br/>
+					<h2><code>git reset HEAD c.txt</code></h2>
+					<pre class="legible">
+						<code class="asciidoc extended">
+Unstaged changes after reset:
+M	c.txt
+						</code>
+					</pre>
+					<h2><code>git checkout c.txt</code></h2>
+					<p>al revisar el estado, <code>c.txt</code> ya no está modificado</p>
+					<pre class="legible">
+						<code class="asciidoc extended">
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD &lt;file&gt;..." to unstage)
+#
+#	modified:   b.txt
+						</code>
+					</pre>
+				</section>
+				
+				<section id="rebase-pre">
+					<p>¡fiu! ahora si..., el último <i>commit</i></p>
+					<pre class="legible">
+						<code class="asciidoc extended">
+git-example user$ git commit -m "B.txt content set to BBBB"
+[master fb4292f] B.txt content set to BBBB
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+						</code>
+					</pre>
+					<p>aunque... mmm... este cambio debería ser parte de un <i>commit</i> anterior...</p>
+					<pre class="legible">
+						<code class="asciidoc extended">
+git log --oneline -- b.txt
+fb4292f B.txt content set to BBBB
+09b9cbb Adding B content and d file.
+8ed6a6f Adding initial files to my first commit
+						</code>
+					</pre>
+				</section>
+				
+				<section id="rebase">
+					<h2><code>git rebase -i HEAD~4</code></h2>
+					<pre class="legible">
+						<code class="asciidoc extended">
+pick 3010f10 Removing wrong file.
+pick 09b9cbb Adding B content and d file.
+pick a4cc3a3 Adding e file and writing C on c.txt
+pick fb4292f B.txt content set to BBBB
+
+# Rebase 8ed6a6f..fb4292f onto 8ed6a6f
+#
+# Commands:
+...
+						</code>
+					</pre>
+					<p>reordenamos los commits: <strong>fb4292f</strong> justo después de <strong>09b9cbb</strong></p>
+					<pre class="legible">
+						<code class="asciidoc extended">
+pick 3010f10 Removing wrong file.
+pick 09b9cbb Adding B content and d file.
+pick fb4292f B.txt content set to BBBB
+pick a4cc3a3 Adding e file and writing C on c.txt
+...
+						</code>
+					</pre>
+				</section>
+				
+				<section id="rebase-2">
+					<p>cambiar la instrucción <strong>pick</strong> de fb4292f por <strong>squash</strong> o <strong>fixup</strong>.</p>
+					<pre class="legible">
+						<code class="asciidoc extended">
+pick 3010f10 Removing wrong file.
+pick 09b9cbb Adding B content and d file.
+squash fb4292f B.txt content set to BBBB
+pick a4cc3a3 Adding e file and writing C on c.txt
+...
+						</code>
+					</pre>
+					<p>luego de ordenar los <i>commits</i>, confirmar los cambios a realizar:</p>
+					<pre class="legible">
+						<code class="asciidoc extended">
+# This is a combination of 2 commits.
+# The first commit's message is:
+
+Adding B content and d file.
+
+# This is the 2nd commit message:
+
+B.txt content set to BBBB
+...
+						</code>
+					</pre>
+				</section>
+				
+				<section id="rebase-3">
+					<p><code>rebase</code> termina de efectuar los cambios</p>
+					<pre class="legible">
+						<code class="asciidoc extended">
+[detached HEAD 9d30a2e] Adding B content and d file.
+ 2 files changed, 1 insertion(+)
+ create mode 100644 d.txt
+Successfully rebased and updated refs/heads/master.
+						</code>
+					</pre>
+					<p>comprobar las modificaciones efectuadas.</p>
+					<pre class="legible">
+						<code class="asciidoc extended">
+git-example user$ git log --oneline
+32397d1 Adding e file and writing C on c.txt
+9d30a2e Adding B content and d file.
+3010f10 Removing wrong file.
+8ed6a6f Adding initial files to my first commit
+						</code>
+					</pre>
+					<p>los dos <i>commits</i> utilizados ya no se encuentran, y en su lugar aparece uno nuevo: <strong>9d30a2e</strong></p>
+				</section>
+				
+				<section id="rebase-4">
+					<p>verificar que en el commit <strong>9d30a2e</strong> el contenido "BBBB" fue almacenado en <code>b.txt</code>.</p>
+					<pre class="legible">
+						<code class="asciidoc extended">
+git-example user$ git show 9d30a2e -- b.txt
+commit 9d30a2ec950ff9a376c0e405807fc898d6a94b37
+Author: user &lt;user@server.com&gt;
+Date:   Tue Mar 4 19:14:16 2014 -0500
+
+    Adding B content and d file.
+    
+    B.txt content set to BBBB
+
+diff --git a/b.txt b/b.txt
+index e69de29..a07e243 100644
+--- a/b.txt
++++ b/b.txt
+@@ -0,0 +1 @@
++BBBB
 						</code>
 					</pre>
 				</section>
