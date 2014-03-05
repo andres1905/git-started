@@ -1,6 +1,16 @@
 .big {
 	font-size: 1.7em !important;
 }
+.prev-obj {
+	margin-bottom: 0 !important;
+}
+.next-obj {
+	margin-top: 0 !important;
+}
+pre {
+	width: 100% !important;
+}
 pre.legible {
 	font-size: 0.75em !important;
 }
+
