@@ -206,6 +206,84 @@ git-example user$ git commit -m "Removing wrong file."
 						</code>
 					</pre>
 				</section>
+				
+				<section id="commit-am-pre">
+					<pre class="legible">
+						<code class="asciidoc">
+git-example user$ echo "B" > b.txt
+git-example user$ touch d.txt
+git-example user$ git status
+						</code>
+						<code>
+# On branch master
+# Changes not staged for commit:
+#   (use "git add &lt;file&gt;..." to update what will be committed)
+#   (use "git checkout -- &lt;file&gt;..." to discard changes in working directory)
+#
+#	modified:   b.txt
+#
+# Untracked files:
+#   (use "git add &lt;file&gt;..." to include in what will be committed)
+#
+#	d.txt
+no changes added to commit (use "git add" and/or "git commit -a")
+						</code>
+					</pre>
+				</section>
+				
+				<section id="commit-am">
+					<h2><code>git commit -am ""</code></h2>
+					<p>ó <i>"matar dos pájaros de un tiro"</i>.</p>
+					<pre class="legible next-obj">
+						<code class="asciidoc">
+git-example user$ git commit -am "Adding B content and d file."
+[master 8cc0a4c] Adding B content and d file.
+ 1 file changed, 1 insertion(+)
+						</code>
+					</pre>
+				</section>
+				
+				<section id="commit-amend-pre">
+					<pre class="legible">
+						<code class="asciidoc">
+git-example user$ git status
+						</code>
+						<code>
+# On branch master
+# Untracked files:
+#   (use "git add &lt;file&gt;..." to include in what will be committed)
+#
+#	d.txt
+nothing added to commit but untracked files present (use "git add" to track)
+						</code>
+					</pre>
+					<p><code>(~_~;)</code></p>
+					<p><i>pero... no se suponía que...</i></p>
+				</section>
+				
+				<section id="commit-amend">
+					<pre class="legible">
+						<code class="asciidoc">
+git-example user$ git add .
+git-example user$ git status
+						</code>
+						<code>
+# On branch master
+# Changes to be committed:
+#   (use "git reset HEAD &lt;file&gt;..." to unstage)
+#
+#	new file:   d.txt
+						</code>
+					</pre>
+					<h2><code>git commit --amend</code></h2>
+					<pre class="legible next-obj">
+						<code class="asciidoc">
+[master 09b9cbb] Adding B content and d file.
+ 2 files changed, 1 insertion(+)
+ create mode 100644 d.txt
+						</code>
+					</pre>
+				</section>
 			</div>
 		</div>
 
