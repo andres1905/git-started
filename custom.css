@@ -13,4 +13,12 @@ pre {
 pre.legible {
 	font-size: 0.75em !important;
 }
+code.extended {
+	max-height: 500px !important;
+}
+blockquote {
+	width: 100% !important;
+	padding: 20px !important;
+	font-size: 1.15em !important;
+}
 

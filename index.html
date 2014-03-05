@@ -258,7 +258,7 @@ nothing added to commit but untracked files present (use "git add" to track)
 						</code>
 					</pre>
 					<p><code>(~_~;)</code></p>
-					<p><i>pero... no se suponía que...</i></p>
+					<p><br/><i>pero... no se suponía que...</i></p>
 				</section>
 				
 				<section id="commit-amend">
@@ -281,6 +281,163 @@ git-example user$ git status
 [master 09b9cbb] Adding B content and d file.
  2 files changed, 1 insertion(+)
  create mode 100644 d.txt
+						</code>
+					</pre>
+				</section>
+				
+				<section id="log-pre">
+					<pre class="legible">
+						<code class="asciidoc">
+git-example user$ echo "C" > c.txt
+git-example user$ touch e.txt
+git-example user$ git add .
+git-example user$ git commit -m "Adding e file and writing C on c.txt"
+						</code>
+						<code>
+[master a4cc3a3] Adding e file and writing C on c.txt
+ 2 files changed, 1 insertion(+)
+ create mode 100644 e.txt
+						</code>
+					</pre>
+				</section>
+				
+				<section id="log">
+					<blockquote>"El pueblo que no conoce su historia está condenado a repetirla"</blockquote>
+					<p>cierto, aunque fuera de contexto en este caso, algo similar aplica...</p>
+					<br/>
+					<h2><code>git log</code></h2>
+					<pre>
+						<code class="asciidoc extended">
+commit a4cc3a36c5b491ad222e6d95ab1a386c5aac25c5
+Author: user &lt;user@server.com&gt;
+Date:   Tue Mar 4 19:47:18 2014 -0500
+
+    Adding e file and writing C on c.txt
+
+commit 09b9cbb24a27a4b3084d1fba2b574c8b2b1876ee
+Author: user &lt;user@server.com&gt;
+Date:   Tue Mar 4 19:14:16 2014 -0500
+
+    Adding B content and d file.
+
+commit 3010f10efae970bddf07de012b9d4675112827cb
+Author: user &lt;user@server.com&gt;
+Date:   Tue Mar 4 19:00:30 2014 -0500
+
+    Removing wrong file.
+
+commit 8ed6a6f8e5cdebf31699df03870e69725f919b87
+Author: user &lt;user@server.com&gt;
+Date:   Tue Mar 4 18:31:48 2014 -0500
+
+    Adding initial files to my first commit
+						</code>
+					</pre>
+				</section>
+				
+				<section id="log-oneline">
+					<p>no quería saber tanto...</p>
+					<br/>
+					<h2><code>git log --oneline</code></h2>
+					<pre class="legible">
+						<code class="asciidoc extended">
+a4cc3a3 Adding e file and writing C on c.txt
+09b9cbb Adding B content and d file.
+3010f10 Removing wrong file.
+8ed6a6f Adding initial files to my first commit
+						</code>
+					</pre>
+				</section>
+				
+				<section id="log-n">
+					<p>¡uy! ¡este proyecto tiene muchos <i>commits</i>!</p>
+					<br/>
+					<h2><code>-n</code></h2>
+					<ul>
+						<li><code>git log -n 2</code></ul>
+						<li><code>git log --oneline -n 2</code></ul>
+					</ul>
+					<pre class="legible">
+						<code class="asciidoc">
+git-example user$ git log -n 2
+commit a4cc3a36c5b491ad222e6d95ab1a386c5aac25c5
+Author: user &lt;user@server.com&gt;
+Date:   Tue Mar 4 19:47:18 2014 -0500
+
+    Adding e file and writing C on c.txt
+
+commit 09b9cbb24a27a4b3084d1fba2b574c8b2b1876ee
+Author: user &lt;user@server.com&gt;
+Date:   Tue Mar 4 19:14:16 2014 -0500
+
+    Adding B content and d file.
+						</code>
+					</pre>
+				</section>
+				
+				<section id="log-dashdash">
+					<p>y... ¿cómo sé que ha pasado con un archivo?</p>
+					<br/>
+					<h2><code>--</code></h2>
+					<ul>
+						<li><code>git log -- b.txt</code></ul>
+						<li><code>git log --oneline -- b.txt</code></ul>
+					</ul>
+					<pre class="legible">
+						<code class="asciidoc">
+git-example user$ git log --oneline -- b.txt
+09b9cbb Adding B content and d file.
+8ed6a6f Adding initial files to my first commit
+						</code>
+					</pre>
+				</section>
+				
+				<section id="show">
+					<h2><code>git show</code></h2>
+					<p>Muestra el contenido del <i>commit</i> más reciente.</p>
+					<pre class="legible">
+						<code class="asciidoc extended">
+commit a4cc3a36c5b491ad222e6d95ab1a386c5aac25c5
+Author: user &lt;user@server.com&gt;
+Date:   Tue Mar 4 19:47:18 2014 -0500
+
+    Adding e file and writing C on c.txt
+						
+diff --git a/c.txt b/c.txt
+index e69de29..3cc58df 100644
+--- a/c.txt
++++ b/c.txt
+@@ -0,0 +1 @@
++C
+diff --git a/e.txt b/e.txt
+new file mode 100644
+index 0000000..e69de29
+						</code>
+					</pre>
+				</section>
+				
+				<section id="show-id">
+					<p>¿para un <i>commit</i> más antiguo?</p>
+					<br/>
+					<h2><code>git show &lt;commit-id&gt;</code></h2>
+					<pre class="legible">
+						<code class="asciidoc extended">
+git-example user$ git show 09b9cbb
+commit 09b9cbb24a27a4b3084d1fba2b574c8b2b1876ee
+Author: user &lt;user@server.com&gt;
+Date:   Tue Mar 4 19:14:16 2014 -0500
+
+    Adding B content and d file.
+
+diff --git a/b.txt b/b.txt
+index e69de29..223b783 100644
+--- a/b.txt
++++ b/b.txt
+@@ -0,0 +1 @@
++B
+diff --git a/d.txt b/d.txt
+new file mode 100644
+index 0000000..e69de29
 						</code>
 					</pre>
 				</section>
